@@ -1,0 +1,12 @@
+sudo: required
+language: python
+install:
+  - pip install -r requirements.txt
+# command to run tests
+script:
+  # unit test
+  - python -m pytest -v
+  # linting test
+  # - flake8
+after_success:
+  - test "$TRAVIS_BRANCH" = "master" && sh .travis/deploy_heroku.sh
