@@ -3,3 +3,7 @@
 
 # py venv
 **/venv
+
+#env
+.env
+config.py

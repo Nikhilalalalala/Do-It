@@ -1,6 +1,6 @@
 import unittest
 
-import app.app
+from app import app
 
 def test_test():
-    assert app.app.start() == "Start Now!"
+    assert app.start() == "Start Now!"
