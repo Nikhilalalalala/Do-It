@@ -7,3 +7,5 @@
 #env
 .env
 config.py
+
+migrations/
