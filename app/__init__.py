@@ -2,7 +2,7 @@ from flask import Flask, request
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from dotenv import load_dotenv
-from app.models import *
+from app.models import db, User, Task
 import os
 
 app = Flask(__name__)
@@ -23,10 +23,16 @@ def start_app():
 def start():
     return "Start Now!"
 
-# Testing the connection with DB
-@app.route('/addTask', methods=["GET"])
+@app.route('/addTask', methods=["POST"])
 def addTask():
-    newTask = Task(name="RANDOM")
-    db.session.add(newTask)
+    request_data = request.get_json()
+    name = request_data['name']
+    description = request_data['description']
+    userid = request_data['userid']
+
+    new_task = Task(name, description, userid)
+    
+    db.session.add(new_task)
     db.session.commit()
+    
     return "adding task"

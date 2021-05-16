@@ -5,7 +5,10 @@
 # from .Task import Task
 # from .base import db
 
+# TODO Where to do input validation?
+
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
 db = SQLAlchemy()
 
@@ -13,14 +16,30 @@ class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
     description = db.Column(db.String(200), unique=True, nullable=False)
-    
-    def __init__(self, name):
+    userid = db.Column(db.Integer, db.Foreign_key('user.id'), nullable=False)
+    date_created = db.Column(db.Date, nullable=False)
+    date_goal = db.Column(db.Date, nullable=True)
+
+    #TODO ENSURE end_date > date_created
+
+    def __init__(self, name: str, description: str, userid: int, date_goal: datetime = None):
         self.name = name
-        self.description= "DUMMYDESC"
+        self.description= description
+        self.date_created = datetime.now()
+        self.userid = userid
+        self.date_goal = date_goal
+        
+    def __repr__(self) -> str:
+        return f'<ID: {self.id}\nNAME: {self.name}\nDESC: {self.description}>\n'
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
-    
-    def __init__(self, name):
+    date_joined = db.Column(db.Date, nullable=False)
+
+    def __init__(self, name: str):
         self.name = name
+        self.date_joined = datetime.now()
+
+    def __repr__(self) -> str:
+        return f'<ID: {self.id}\nNAME: {self.name}\n'
