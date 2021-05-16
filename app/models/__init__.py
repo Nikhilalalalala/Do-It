@@ -5,10 +5,11 @@
 # from .Task import Task
 # from .base import db
 
-# TODO Where to do input validation?
 
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+
+# TODO Where to do input validation?
 
 db = SQLAlchemy()
 
@@ -16,7 +17,7 @@ class Task(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True, nullable=False)
     description = db.Column(db.String(200), unique=True, nullable=False)
-    userid = db.Column(db.Integer, db.Foreign_key('user.id'), nullable=False)
+    userid = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     date_created = db.Column(db.Date, nullable=False)
     date_goal = db.Column(db.Date, nullable=True)
 

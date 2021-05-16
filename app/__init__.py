@@ -25,10 +25,9 @@ def start():
 
 @app.route('/addTask', methods=["POST"])
 def addTask():
-    request_data = request.get_json()
-    name = request_data['name']
-    description = request_data['description']
-    userid = request_data['userid']
+    name = request.json['name']
+    description = request.json['description']
+    userid = request.json['userid']
 
     new_task = Task(name, description, userid)
     
@@ -36,3 +35,15 @@ def addTask():
     db.session.commit()
     
     return "adding task"
+
+
+@app.route('/addUser', methods=["POST"])
+def addUser():
+    name = request.json['name']
+
+    new_user = User(name)
+    
+    db.session.add(new_user)
+    db.session.commit()
+    
+    return "adding user"
