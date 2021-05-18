@@ -12,7 +12,7 @@ def start_app():
     load_dotenv()
     database_url = os.getenv("DATABASE_URL")
     app.config['SQLALCHEMY_DATABASE_URI'] = database_url
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+    # app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
     # initialize Flask SQLALchemy with this flask app
     db.init_app(app)
