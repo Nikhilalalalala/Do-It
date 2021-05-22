@@ -1,6 +1,8 @@
+from flask.json import jsonify
 from flask_restful import Resource
 from app.dbservice import DBService
 from flask import request
+import json
 
 class Users(Resource):
 
@@ -9,7 +11,8 @@ class Users(Resource):
 
     def post(self):
         # Adding a task
-        name = request.json['name']
+        body = json.loads(request.data)
+        name = body['name']
 
         result = DBService.addUser(self, name)
         if result:     
