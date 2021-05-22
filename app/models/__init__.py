@@ -1,15 +1,5 @@
-# this file structure follows http://flask.pocoo.org/docs/1.0/patterns/appfactories/
-# initializing db in api.models.base instead of in api.__init__.py
-# to prevent circular dependencies
-# from .User import User
-# from .Task import Task
-# from .base import db
-
-
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-
-# TODO Where to do input validation?
 
 db = SQLAlchemy()
 
