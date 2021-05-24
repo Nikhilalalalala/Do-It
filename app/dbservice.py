@@ -1,5 +1,6 @@
 from sqlalchemy import exc
 from app.models import db, Task, User
+import uuid
 
 class DBService():
     @staticmethod
@@ -14,11 +15,25 @@ class DBService():
             return False
 
     @staticmethod
-    def addUser(self, name):
-        user = User(name)
+    def addUser(name, email, hashed_password):
+        user = User(name, email, hashed_password)
         return DBService.addObjectIntoDB(user)
     
     @staticmethod
-    def addTask(self, name, desc, userid):
+    def addTask(name, desc, userid):
         task = Task(name, desc, userid)
         return DBService.addObjectIntoDB(task)
+
+    @staticmethod
+    def getTasksFromUser(userid):
+        return Task.query.filter_by(userid=userid)
+
+    @staticmethod
+    def getUserByUsername(username):
+        return User.query.filter_by(username=username).first()
+    
+    @staticmethod
+    def getUserByID(id):
+        return User.query.filter_by(id=id).first()
+        
+        

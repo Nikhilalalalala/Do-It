@@ -1,7 +1,8 @@
 from flask import Flask
 
-def create_app(config_filename):
-    app = Flask(__name__)
+app = Flask(__name__)
+
+def configure_app(config_filename):
     app.config.from_object(config_filename)
     
     from app import api_bp
@@ -14,5 +15,5 @@ def create_app(config_filename):
 
 
 if __name__ == "__main__":
-    app = create_app("config")
+    app = configure_app("config")
     app.run(debug=True)
