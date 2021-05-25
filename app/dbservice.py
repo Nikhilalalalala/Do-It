@@ -20,12 +20,13 @@ class DBService():
         return DBService.addObjectIntoDB(user)
     
     @staticmethod
-    def addTask(name, desc, userid):
-        task = Task(name, desc, userid)
+    def addTask(name, desc, userid, date_goal):
+        task = Task(name, desc, userid, date_goal)
         return DBService.addObjectIntoDB(task)
 
     @staticmethod
     def getTasksFromUser(userid):
+        print(userid)
         return Task.query.filter_by(userid=userid)
 
     @staticmethod

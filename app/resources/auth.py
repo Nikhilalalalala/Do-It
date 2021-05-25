@@ -19,32 +19,34 @@ class Auth(Resource):
         
         user = DBService.getUserByUsername(auth.username)
 
-#! how to determine wehat secrets to use 
+        #! how to determine what secrets to use 
 
         if check_password_hash(user.hashed_password, auth.password):
-            token = jwt.encode({'id' : user.id, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=1440)}, "secret")
+            token = jwt.encode({'id' : user.id, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=1440)}, "secret", algorithm="HS512")
 
-            return jsonify({'token' : token})
+            return {'token' : token}
         
         return make_response("Invalid Credentials", 401, {'WWW-Authenticate' : 'Basic realm="Login required!"'})
 
-    def token_required(f):
-        @wraps(f)
-        def decorated(*args, **kwargs):
-            token = None
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
 
-            if 'x-access-token' in request.headers:
-                token = request.headers['x-access-token']
+        if 'x-access-token' in request.headers:
+            token = request.headers['x-access-token']
+            print("Token: ", token)
 
-            if not token:
-                return jsonify({'message' : 'Token is missing!'}), 401
+        if not token:
+            return {'message' : 'Token is missing!'}, 401
+        
+        try: 
+            data = jwt.decode(token, "secret", algorithms="HS512")
+            print("\nJWT Decoded: ", data , data['id'])
+            current_user = DBService.getUserByID(data['id'])
+        except:
+            return {'message' : 'Token is invalid!'}, 401
 
-            try: 
-                data = jwt.decode(token, app.config['SECRET_KEY'])
-                current_user = DBService.getUserByID(data['id'])
-            except:
-                return jsonify({'message' : 'Token is invalid!'}), 401
+        return f(current_user, *args, **kwargs)
 
-            return f(current_user, *args, **kwargs)
-
-        return decorated
+    return decorated

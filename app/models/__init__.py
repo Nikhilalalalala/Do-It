@@ -39,5 +39,8 @@ class User(db.Model):
         self.hashed_password = hashed_password
         self.date_joined = datetime.now()
 
+    def getId(self):
+        return self.id
+
     def __repr__(self) -> str:
-        return f'<ID: {self.id}\nNAME: {self.name}\n'
+        return f'<ID: {self.id}\nNAME: {self.username}\n'
