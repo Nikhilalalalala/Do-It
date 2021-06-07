@@ -8,26 +8,37 @@ import datetime
 import jwt
 from run import app
 from functools import wraps
+import json 
 
 class Auth(Resource):
 
     def post(self):
-        auth = request.authorization
 
-        if not auth or not auth.username or not auth.password:
-            return make_response("Not authenticated", 401, {'WWW-Authenticate' : 'Basic realm="Login required!"'})
-        
-        user = DBService.getUserByUsername(auth.username)
+        auth = json.loads(request.data)
+
+        if not auth:
+           return {"status": "error", "error": "Empty body"}, 400
+
+        auth_username = auth['username']
+        auth_password =  auth['password']
+
+        if not auth_username or not auth_password:
+           return {"status": "error", "error": "Fields not given"}, 400
+
+        user = DBService.getUserByUsername(auth_username)
 
         #! how to determine what secrets to use 
+        if not user:
+            return {"status": "error", "error": "No such user found"}, 400
 
-        if check_password_hash(user.hashed_password, auth.password):
+
+        if check_password_hash(user.hashed_password, auth_password):
             token = jwt.encode({'id' : user.id, 'exp' : datetime.datetime.utcnow() + datetime.timedelta(minutes=1440)}, "secret", algorithm="HS512")
 
-            return {'token' : token}
+            return {'token' : token} , 200
         
-        return make_response("Invalid Credentials", 401, {'WWW-Authenticate' : 'Basic realm="Login required!"'})
-
+        return {"status": "error", "error": "Invalid Credentials"}, 400
+        
 def token_required(f):
     @wraps(f)
     def decorated(*args, **kwargs):

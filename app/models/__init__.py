@@ -11,6 +11,7 @@ class Task(db.Model):
     userid = db.Column(db.String(50), db.ForeignKey('user.id'), nullable=False)
     date_created = db.Column(db.Date, nullable=False)
     date_goal = db.Column(db.Date, nullable=True)
+    # TODO isDone = db.Column(db.Boolean)
 
     #TODO ENSURE end_date > date_created
 
