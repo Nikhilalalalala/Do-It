@@ -11,17 +11,18 @@ class Task(db.Model):
     userid = db.Column(db.String(50), db.ForeignKey('user.id'), nullable=False)
     date_created = db.Column(db.Date, nullable=False)
     date_goal = db.Column(db.Date, nullable=True)
-    # TODO isDone = db.Column(db.Boolean)
+    isDone = db.Column(db.Boolean, nullable=False)
 
     #TODO ENSURE end_date > date_created
 
-    def __init__(self, name: str, description: str, userid: int, date_goal: datetime = None):
+    def __init__(self, name: str, description: str, userid: str, date_goal: datetime = None, isDone: bool = False):
         self.id = uuid.uuid4()
         self.name = name
         self.description= description
         self.date_created = datetime.now()
         self.userid = userid
         self.date_goal = date_goal
+        self.isDone = isDone
         
     def __repr__(self) -> str:
         return f'<ID: {self.id}\nNAME: {self.name}\nDESC: {self.description}>\n'
