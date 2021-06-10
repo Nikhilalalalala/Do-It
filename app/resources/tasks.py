@@ -28,7 +28,6 @@ class Tasks(Resource):
         else:
             data = json.loads(request.data)
             userid = current_user.getId()
-            #  name: str, description: str, userid: int, date_goal: datetime = None)
             result = DBService.updateTask(data, userid)
             print(result)
             if result:     
@@ -39,7 +38,6 @@ class Tasks(Resource):
     @token_required
     def delete(current_user, self):
         userid = current_user.getId()
-        print("userid: " + userid)
         data = json.loads(request.data)
         print(data)
         if data['id'] != None:

@@ -25,6 +25,7 @@ class DBService():
         if "date_goal" in data:
             date_goal = data['date_goal']
         task = Task(name, description, userid, date_goal)
+        print(task)
         return DBService.addObjectIntoDB(task)
 
     @staticmethod
