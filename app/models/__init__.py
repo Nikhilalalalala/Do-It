@@ -25,7 +25,7 @@ class Task(db.Model):
         self.isDone = isDone
         
     def __repr__(self) -> str:
-        return f'<Task:\n {self.__dict__} \n>'
+        return f'<Task: {self.__dict__} \n>'
 
 class User(db.Model):
     id = db.Column(db.String(50), primary_key=True)

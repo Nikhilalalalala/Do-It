@@ -63,18 +63,20 @@ class Tasks(Resource):
                 all_tasks = []
                 for task in tasklist:
                     task = task.__dict__
+                    
                     task_data = {
                         'id': task['id'],
                         'userid': task['id'],
                         'name': task['name'],
                         'description': task['description'],
                         'isDone' : task['isDone'],
+                        # 'dateGoal': task['date_goal']
                     }
                     if task['date_created'] is not None:
-                        task_data['date_created'] = task['date_created'].strftime("%m/%d/%Y, %H:%M:%S"),
+                        task_data['date_created'] = task['date_created'].strftime("%Y-%m-%d %H:%M:%S"),
                     if task['date_goal'] is not None:
-                        task_data['date_goal'] = task['date_goal'].strftime("%m/%d/%Y, %H:%M:%S")
-
+                        task_data['date_goal'] = task['date_goal'].strftime("%Y-%m-%d %H:%M:%S")
+                    
                     all_tasks.append(task_data)
 
                 json_string = json.dumps(all_tasks)

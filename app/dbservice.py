@@ -1,5 +1,6 @@
 from sqlalchemy import exc
 from app.models import db, Task, User
+from datetime import datetime
 
 class DBService():
     @staticmethod
@@ -25,7 +26,7 @@ class DBService():
         if "date_goal" in data:
             date_goal = data['date_goal']
         task = Task(name, description, userid, date_goal)
-        print(task)
+        print("Task " , task)
         return DBService.addObjectIntoDB(task)
 
     @staticmethod
@@ -55,7 +56,8 @@ class DBService():
         description = data['description']
         date_goal = None
         if "date_goal" in data:
-            date_goal = data['date_goal']
+            date_goal = datetime.strptime(data['date_goal'], '%Y-%m-%d')
+        print(date_goal)
         isDone = data['isDone'] == "true"
         newTask = Task(name, description, userid, date_goal, isDone)
         newDict = newTask.__dict__
