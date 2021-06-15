@@ -33,13 +33,15 @@ class User(db.Model):
     email = db.Column(db.String(255), unique=True)
     hashed_password = db.Column(db.String(80), nullable=False)
     date_joined = db.Column(db.Date, nullable=False)
+    bio = db.Column(db.String(200), nullable=False)
 
-    def __init__(self, username: str, email: str, hashed_password: str):
+    def __init__(self, username: str, email: str, hashed_password: str, bio: str = ''):
         self.id = uuid.uuid4()
         self.username = username
         self.email = email
         self.hashed_password = hashed_password
         self.date_joined = datetime.now()
+        self.bio = bio
 
     def getId(self):
         return self.id

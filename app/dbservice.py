@@ -73,4 +73,9 @@ class DBService():
         db.session.delete(deleteTask)
         db.session.commit()
         return True
-        
+
+    @staticmethod
+    def updateBioByUserid(userid, bio):
+        result = db.session.query(User).filter(User.id==userid).update({User.bio: bio})
+        db.session.commit()
+        return result

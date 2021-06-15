@@ -16,8 +16,6 @@ class Users(Resource):
         password = body['password']
         hashed_password = generate_password_hash(password, method='sha256')
 
-    #!QNS: Is it ok to send the password through clear text from frontend to backend?
-
         result = DBService.addUser(username, email, hashed_password)
         if result:     
             return { "status": 'success' }, 200

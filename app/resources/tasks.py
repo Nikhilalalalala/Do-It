@@ -10,7 +10,6 @@ class Tasks(Resource):
     def post(current_user:User, self):
         # Adding a task
         userid = current_user.getId()
-        print("userid: " + userid)
         data = json.loads(request.data)
         result = DBService.addTask(data, userid)
 
