@@ -17,6 +17,6 @@ def configure_app(config_filename):
 # if __name__ == "__main__":
 #     app = configure_app("config")
 #     app.run(debug=True)
-app = configure_app("config")
+app = configure_app("config.py")
 application = app
 application.run()
