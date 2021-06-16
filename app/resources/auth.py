@@ -1,12 +1,9 @@
-from flask.json import jsonify
 from app.dbservice import DBService
 from flask.globals import request
-from flask.helpers import make_response
 from flask_restful import Resource
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import check_password_hash
 import datetime
 import jwt
-from run import app
 from functools import wraps
 import json 
 
