@@ -6,11 +6,11 @@ import os
 app = Flask(__name__)
 
 def configure_app(config_filename):
-    try:
-        app.config.from_object(config_filename)
-    except ModuleNotFoundError:
-        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['SQLALCHEMY_DATABASE_URI']
-        app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
+    # try:
+    #     app.config.from_object(config_filename)
+    # except ModuleNotFoundError:
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['SQLALCHEMY_DATABASE_URI']
+    app.config['SECRET_KEY'] = os.environ['SECRET_KEY']
         # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = os.environ['SQLALCHEMY_TRACK_MODIFICATIONS']
         # app.config['SQLALCHEMY_ECHO'] = os.environ['SQLALCHEMY_ECHO']
 
