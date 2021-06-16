@@ -21,12 +21,12 @@ def configure_app(config_filename):
     
     return app
 
-app = configure_app("config")
-app.run(debug=True)
+# app = configure_app("config")
+# app.run(debug=True)
 
-# if __name__ == "__main__":
-#     app = configure_app("config")
-#     app.run(debug=True)
+if __name__ == "__main__":
+    app = configure_app("config")
+    app.run(debug=True)
 # app = configure_app("config")
 # application = app
 # application.run()
